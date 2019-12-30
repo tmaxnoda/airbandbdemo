@@ -36,8 +36,7 @@ const routes: Routes = [
           },
           {
             path: ':placeId',
-            loadChildren:
-              './offers/offer-bookings/offer-bookings.module#OfferBookingsPageModule'
+            loadChildren: () => import('./offers/offer-bookings/offer-bookings.module').then(m => m.OfferBookingsPageModule )
           },
 
           {
