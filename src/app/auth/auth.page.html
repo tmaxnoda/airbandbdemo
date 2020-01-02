@@ -1,21 +1,52 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-title>Authenticate</ion-title>
+    <ion-toolbar color="primary">
+        <ion-title> {{isLoggedIn? "LogIn" : "SignUp"}}</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-list>
-        <ion-item>
-            <ion-label position="floating">E-mail</ion-label>
-            <ion-input></ion-input>
-        </ion-item>
-    </ion-list>
-    <div text-center>
-        <ion-spinner color="primary" *ngIf="isLoading"></ion-spinner>
-    </div>
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <ion-grid fixed>
+            <ion-row>
+                <ion-col size-sm="6" offset-sm="3">
+                    <ion-list>
+                        <ion-item>
+                            <ion-label position="floating">E-mail</ion-label>
+                            <ion-input type="email" ngModel name="email" required email minLength="6" #emailCtrl="ngModel"></ion-input>
+                        </ion-item>
+                        <ion-item lines="none" *ngIf="!emailCtrl.valid && emailCtrl.touched">
+                            <p>Should a valid email address</p>
+                        </ion-item>
 
-    <ion-button color="primary" (click)="onLogin()" *ngIf="!isLoading">
-        Login
-    </ion-button>
+                        <ion-item>
+                            <ion-label position="floating">Password</ion-label>
+                            <ion-input type="password" ngModel name="password" required minLength="6" #passwordCtrl="ngModel"></ion-input>
+                        </ion-item>
+
+                        <ion-item lines="none" *ngIf="!passwordCtrl.valid && passwordCtrl.touched">
+                            <p>Should at least 6 characters long</p>
+                        </ion-item>
+                    </ion-list>
+                </ion-col>
+
+            </ion-row>
+
+            <ion-row>
+                <ion-col size-sm="6" offset-sm="3">
+
+                    <div text-center>
+                        <ion-spinner color="primary" *ngIf="isLoading"></ion-spinner>
+                    </div>
+
+                    <ion-button (click)="switchToSignUpMode()" type="button" color="primary" fill="clear" *ngIf="!isLoading" expand="block">
+                        switch to {{isLoggedIn? "signUp" : "LogIn"}}
+                    </ion-button>
+
+                    <ion-button type="submit" color="primary" expand="block" fill="outline" *ngIf="!isLoading">
+                        {{isLoggedIn? "LogIn" : "SignUp"}}
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </form>
 </ion-content>

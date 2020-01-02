@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { OffersPage } from './offers.page';
+import { OfferItemComponent } from './offer-item/offer-item.component';
 
 const routes: Routes = [
   {

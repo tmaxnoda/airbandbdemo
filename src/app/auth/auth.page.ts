@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
 import { LoadingController } from '@ionic/angular';
+import { NgModel, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-auth',
@@ -12,6 +13,7 @@ export class AuthPage implements OnInit {
 
   constructor(private loadingCtrl: LoadingController,private router: Router, private authService: AuthService) { }
 isLoading = false;
+isLoggedIn = true;
   ngOnInit() {
   }
 
@@ -19,7 +21,7 @@ isLoading = false;
     this.isLoading = true;
     // authenticate
     this.authService.login();
-    //load spinner
+    // load spinner
     this.loadingCtrl.create({keyboardClose: true, message: 'Logging in...'}).then(loadingEl => {
       loadingEl.present();
       setTimeout(() => {
@@ -28,8 +30,29 @@ isLoading = false;
         this.router.navigateByUrl('/places/tabs/discover');
       }, 1500);
     });
+  }
 
-    
+  onSubmit(f: NgForm) {
+    console.log(f);
+    if(!f.valid){
+      return;
+    };
+
+    const email = f.value.email;
+    const  password = f.value.password;
+
+    console.log(`Email : ${email} , Password : ${password}`);
+
+    if (this.isLoggedIn) {
+        // call to logIn Service
+        this.onLogin();
+    } else {
+        // sign up
+    }
+  }
+
+  switchToSignUpMode() {
+    this.isLoggedIn = !this.isLoggedIn;
 
   }
 

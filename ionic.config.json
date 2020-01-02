@@ -1,5 +1,7 @@
 {
   "name": "airbandbdemo",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
